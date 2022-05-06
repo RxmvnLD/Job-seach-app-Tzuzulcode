@@ -1,13 +1,16 @@
 import React, {useState} from 'react'
 import Navbar from './Navbar'
-import userLogo from '../../imports/img/user-logo.png'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { solid} from '@fortawesome/fontawesome-svg-core/import.macro'
 
 function Burger() {
     const [hamburgerToggle, setHamburgerToggle] = useState(false);
 
   return (
       <>
-        <img src={userLogo} alt='user logo' className="bg-bone border-8 border-navy-blue w-20 rounded-full" onClick={()=>{setHamburgerToggle(!hamburgerToggle)}}/>
+      <div className="bg-dark-blue dark:bg-bone rounded-full w-fit">
+      <FontAwesomeIcon  className="text-black w-4 h-4" icon={solid('user')}onClick={()=>{setHamburgerToggle(!hamburgerToggle)}}/>
+      </div>
         <Navbar hamburgerToggle={hamburgerToggle}/>
       </>
   )

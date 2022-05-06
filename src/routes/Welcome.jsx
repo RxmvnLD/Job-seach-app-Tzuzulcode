@@ -1,5 +1,5 @@
 import React from 'react'
-import StartButton from "./StartButton";
+import StartButton from "../components/StartButton";
 import workingLogo from "../imports/img/working-logo.png";
 import {Link} from 'react-router-dom' 
 
