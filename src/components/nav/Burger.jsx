@@ -6,10 +6,10 @@ function Burger() {
     const [hamburgerToggle, setHamburgerToggle] = useState(false);
 
   return (
-      <>
+      <div>
         <img src={userLogo} alt='user logo' className="bg-bone border-8 border-navy-blue w-20 rounded-full" onClick={()=>{setHamburgerToggle(!hamburgerToggle)}}/>
         <Navbar hamburgerToggle={hamburgerToggle}/>
-      </>
+      </div>
   )
 }
 
