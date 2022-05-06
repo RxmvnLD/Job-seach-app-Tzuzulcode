@@ -1,13 +1,15 @@
 import React from 'react'
 import JobCard from './JobCard.'
-import Burger from './nav/Burger'
 import SortBy from './SortBy'
+import Sidebar from './user_sidebar/Sidebar'
 function Index() {
 
   return (
-    <div >
-        <Burger/>
+    <div className=''>
+        <Sidebar/>
+        <div className='flex justify-end'>
         <SortBy/>
+        </div>
         <JobCard/>
         <JobCard/>
         <JobCard/>

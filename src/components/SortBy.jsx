@@ -7,9 +7,11 @@ function SortBy() {
 const [sortMode, setSortMode] = useState("Sort by")
 
   return (
-    <div>
-        <div>{sortMode} <FontAwesomeIcon icon={solid('caret-down')}/></div>
-    </div>
+    <>
+        <div className='m-5'>
+            Sort by <FontAwesomeIcon icon={solid('caret-down')}/>
+        </div>
+    </>
   )
 }
 

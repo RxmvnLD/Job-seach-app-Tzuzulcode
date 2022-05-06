@@ -1,4 +1,5 @@
 import React, {useState} from 'react'
+import { Link } from 'react-router-dom';
 
 function Login() {
 const [form, setForm] = useState({})
@@ -22,7 +23,10 @@ const formHandler=(e)=>{
         <br />
             <input type="password" name="confirmpass" id="confirmpass" className='text-black' onChange={formHandler}/>
         <br />
-        <button type="submit" className='p-1 m-2 rounded-lg bg-white text-black'>Iniciar sesión</button>
+        <button type="submit" className='p-1 m-2 rounded-lg bg-white text-black'>
+            {/*Agregar ternario con auth para redirect*/}
+            <Link to="/index">Iniciar sesión</Link>
+        </button>
     </form>
     </div>
   )
