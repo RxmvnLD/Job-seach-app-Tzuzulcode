@@ -5,7 +5,6 @@ import styled from "styled-components";
 import logo from "../imports/img/logo.png";
 import { useLocation, useNavigate } from "react-router-dom";
 
-
 //Funcion para leer mas
 function ReadMore({ children = 100 }) {
   const text = children;
@@ -30,13 +29,12 @@ function ReadMore({ children = 100 }) {
   );
 }
 
-
 //DETALLE EMPLEO
 export const DetalleEmpleo = () => {
   //Obtner el id de la URL
   const location = useLocation();
   const vacanteId = location.pathname.split("/")[2];
-  console.log(vacanteId)
+  console.log(vacanteId);
 
   //Ir atras
   const back = useNavigate();
@@ -44,20 +42,31 @@ export const DetalleEmpleo = () => {
   const [red, setRed] = useState(false);
 
   //Get detalles del empleo
-  const [job, setJob] = useState();
+  const [isLoading, setIsLoading] = useState(true);
+  const [job, setJob] = useState(null);
   useEffect(() => {
-    fetch("https://backendnodejstzuzulcode.uw.r.appspot.com/api/jobs/"+vacanteId, {
-      headers: {
-        Authorization: "Bearer " + localStorage.getItem("token"),
-      },
-    })
+    fetch(
+      "https://backendnodejstzuzulcode.uw.r.appspot.com/api/jobs/" + vacanteId,
+      {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    )
       .then((res) => res.json())
       .then((job) => {
         setJob(job);
+        setIsLoading(false);
       });
-  }, []);
+  }, [vacanteId]);
   console.log(job);
-
+  if (isLoading) {
+    return (
+      <div className="App">
+        <h1>Cargando...</h1>
+      </div>
+    );
+  }
   return (
     <>
       {" "}
@@ -76,7 +85,7 @@ export const DetalleEmpleo = () => {
           <Img src={logo} alt={"logo"} />
           <Title>{job.title}</Title>
           <Subtitle>Nombre de la empresa</Subtitle>
-          <span>Publicada: 10 Jul 2022</span>
+          <span>Publicada: {job.creationDate}</span>
         </Card>
         <Card>
           <BoxDetalles>
@@ -90,19 +99,19 @@ export const DetalleEmpleo = () => {
             </div>
             <div>
               <Subtitle>Rango salarial</Subtitle>
-              <span> $1000 </span>
+              <span>$ {job.salary}</span>
             </div>
             <div>
               <Subtitle>Ubicacion</Subtitle>
-              <span>{job.location.city} | {job.location.country}</span>
+              <span>
+                {job.location.city} | {job.location.country}
+              </span>
             </div>
           </BoxDetalles>
         </Card>
         <Card>
           <Subtitle>Descripcion del trabajo</Subtitle>
-          <ReadMore>
-            {job.description}
-          </ReadMore>
+          <ReadMore>{job.description}</ReadMore>
         </Card>
         <Card>
           <Subtitle>Requisitos del trabajo</Subtitle>
@@ -193,7 +202,7 @@ const BotonArea = styled.div`
   justify-content: center;
 `;
 const Icon = styled(FontAwesomeIcon)`
-  color: ${props => props.red ? "red" : "black"};
+  color: ${(props) => (props.red ? "red" : "black")};
   align-self: center;
   font-size: 20px;
   cursor: pointer;
