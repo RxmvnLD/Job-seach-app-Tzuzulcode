@@ -1,17 +1,14 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  solid,
-  regular,
-  brands,
-} from "@fortawesome/fontawesome-svg-core/import.macro";
-import React, { useState } from "react";
+import { solid, regular } from "@fortawesome/fontawesome-svg-core/import.macro";
+import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import logo from "../imports/img/logo.png";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
+
+//Funcion para leer mas
 function ReadMore({ children = 100 }) {
   const text = children;
-
   const [isShow, setIsShowLess] = useState(true);
   const result = isShow ? text.slice(0, 100) : text;
 
@@ -24,16 +21,43 @@ function ReadMore({ children = 100 }) {
       {result}
       <Text className="btn btn-link" onClick={toggleIsShow}>
         {isShow ? "Leer mas" : "Leer menos"}
-        <FontAwesomeIcon style={{padding:"0px 5px"}} icon={isShow ? solid("caret-down") : solid("caret-up")} />
+        <FontAwesomeIcon
+          style={{ padding: "0px 5px" }}
+          icon={isShow ? solid("caret-down") : solid("caret-up")}
+        />
       </Text>
     </>
   );
 }
 
+
+//DETALLE EMPLEO
 export const DetalleEmpleo = () => {
+  //Obtner el id de la URL
+  const location = useLocation();
+  const vacanteId = location.pathname.split("/")[2];
+  console.log(vacanteId)
+
+  //Ir atras
   const back = useNavigate();
 
   const [red, setRed] = useState(false);
+
+  //Get detalles del empleo
+  const [job, setJob] = useState();
+  useEffect(() => {
+    fetch("https://backendnodejstzuzulcode.uw.r.appspot.com/api/jobs/"+vacanteId, {
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem("token"),
+      },
+    })
+      .then((res) => res.json())
+      .then((job) => {
+        setJob(job);
+      });
+  }, []);
+  console.log(job);
+
   return (
     <>
       {" "}
@@ -50,7 +74,7 @@ export const DetalleEmpleo = () => {
       <CardContainer>
         <Card>
           <Img src={logo} alt={"logo"} />
-          <Title>Nombre de la vacante</Title>
+          <Title>{job.title}</Title>
           <Subtitle>Nombre de la empresa</Subtitle>
           <span>Publicada: 10 Jul 2022</span>
         </Card>
@@ -66,28 +90,22 @@ export const DetalleEmpleo = () => {
             </div>
             <div>
               <Subtitle>Rango salarial</Subtitle>
-              <span> $1000 - $2000</span>
+              <span> $1000 </span>
             </div>
             <div>
               <Subtitle>Ubicacion</Subtitle>
-              <span> 20 Oct 2022</span>
+              <span>{job.location.city} | {job.location.country}</span>
             </div>
           </BoxDetalles>
         </Card>
         <Card>
           <Subtitle>Descripcion del trabajo</Subtitle>
           <ReadMore>
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus,
-            neque. Quia nam optio cumque eius eum fugit at repellendus atque,
-            porro sint ab perferendis minus consequuntur dolorem fugiat fuga
-            suscipit. Lorem ipsum dolor sit amet consectetur adipisicing elit.
-            Exercitationem consequatur quis animi molestias, itaque dolores
-            veritatis similique? Nam fugit saepe id unde minima, dolores
-            voluptates error, ex laborum omnis maiores.
+            {job.description}
           </ReadMore>
         </Card>
         <Card>
-          <Subtitle>Descripcion del trabajo</Subtitle>
+          <Subtitle>Requisitos del trabajo</Subtitle>
           <ReadMore>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus,
             neque. Quia nam optio cumque eius eum fugit at repellendus atque,
@@ -175,7 +193,7 @@ const BotonArea = styled.div`
   justify-content: center;
 `;
 const Icon = styled(FontAwesomeIcon)`
-  color: ${(props) => (props.red ? "red" : "black")};
+  color: ${props => props.red ? "red" : "black"};
   align-self: center;
   font-size: 20px;
   cursor: pointer;
