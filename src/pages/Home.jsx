@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import JobCard from "../components/JobCard.";
-import { Navbar } from "../components/Navbar";
+import JobCard from "../components/JobCard";
+import Sidebar from "../components/user_sidebar/Sidebar";
 import SortBy from "../components/SortBy";
 
-export const Home = () => {
+const Home = () => {
   const [jobs, setJobs] = useState();
   useEffect(() => {
     fetch("https://backendnodejstzuzulcode.uw.r.appspot.com/api/jobs", {
@@ -20,7 +20,7 @@ export const Home = () => {
   console.log(jobs);
   return (
     <>
-      <Navbar />
+      <Sidebar />
       <Etiqueta>Vacantes destacadas</Etiqueta>
       <Etiqueta>
         <SortBy />
@@ -32,6 +32,7 @@ export const Home = () => {
     </>
   );
 };
+
 const CardContainer = styled.main.attrs({
   className: "",
 })`
@@ -44,3 +45,5 @@ const Etiqueta = styled.h1.attrs({})`
   font-weight: 700;
   color: lightslategray;
 `;
+
+export default Home;

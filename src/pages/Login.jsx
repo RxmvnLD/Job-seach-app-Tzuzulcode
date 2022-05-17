@@ -38,7 +38,6 @@ export default function Login() {
       <form onSubmit={login}>
         <input ref={email} placeholder="Email..." type="email" />
         <input ref={password} placeholder="Password..." type="password" />
-
         <button>Login</button>
       </form>
     </div>
