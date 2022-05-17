@@ -32,6 +32,7 @@ const Home = () => {
     </>
   );
 };
+
 const CardContainer = styled.main.attrs({
   className: "",
 })`
