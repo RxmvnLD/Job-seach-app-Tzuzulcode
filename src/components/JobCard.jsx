@@ -15,10 +15,8 @@ function JobCard({jobs}) {
         <section className="font-normal text-gray-700 dark:text-gray-400">
             <article>Working hours</article>
             <article>Remote</article>
-            <article>Salario: {job.salary}</article>
+            <article>Salario: {/* job.salary */}</article>
           </section>
-        </Link>
-      ))}
     </div>
   );
 }
