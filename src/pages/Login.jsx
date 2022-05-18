@@ -21,12 +21,12 @@ export default function Login() {
     })
       .then((res) => res.json())
       .then((data) => {
-          console.log(data)
+        console.log(data);
         localStorage.setItem("token", data.token);
         context.setAuth({
           id: data.user.id,
           name: data.user.name,
-          role:data.user.role,
+          role: data.user.role,
           logged: true,
         });
       })

@@ -3,7 +3,7 @@ import styled from "styled-components";
 import JobCard from "../components/JobCard";
 import Sidebar from "../components/user_sidebar/Sidebar";
 import SortBy from "../components/SortBy";
-
+import DarkModeToggle from "../components/DarkModeToggle";
 const Home = () => {
   const [jobs, setJobs] = useState();
   useEffect(() => {
@@ -21,13 +21,13 @@ const Home = () => {
   return (
     <>
       <Sidebar />
+      <DarkModeToggle />
       <Etiqueta>Vacantes destacadas</Etiqueta>
       <Etiqueta>
         <SortBy />
       </Etiqueta>
-
       <CardContainer>
-        <JobCard jobs={jobs}/>
+        <JobCard jobs={jobs} />
       </CardContainer>
     </>
   );
