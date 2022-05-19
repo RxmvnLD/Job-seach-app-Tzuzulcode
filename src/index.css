@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  @apply light bg-primary text-primary;
+  @apply light bg-primary text-primary caret-black;
 }
 
 .dark {

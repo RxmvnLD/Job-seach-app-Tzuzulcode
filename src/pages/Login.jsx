@@ -1,8 +1,8 @@
 import React, { useContext, useRef } from "react";
-import { authContext } from "../Context/AuthContext";
+import AuthContext from "../Context/AuthContext";
 
 export default function Login() {
-  const context = useContext(authContext);
+  const context = useContext(AuthContext);
 
   const email = useRef();
   const password = useRef();
@@ -36,8 +36,18 @@ export default function Login() {
     <div>
       <h1>Login</h1>
       <form onSubmit={login}>
-        <input ref={email} placeholder="Email..." type="email" />
-        <input ref={password} placeholder="Password..." type="password" />
+        <input
+          ref={email}
+          placeholder="Email..."
+          type="email"
+          className="text-black"
+        />
+        <input
+          ref={password}
+          placeholder="Password..."
+          type="password"
+          className="text-black"
+        />
         <button>Login</button>
       </form>
     </div>
