@@ -1,7 +1,9 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import tw from "twin.macro";
+import DarkModeToggle from "../DarkModeToggle";
+import Logout from "./Logout";
 
 //Agregar ternario para mostrar login-register/datos dependiendo si esta logeado
 
@@ -10,45 +12,67 @@ const Navbar = (props) => {
   return (
     <>
       {isOpen ? (
-        <div
-          className="z-50 bg-dark-blue dark:bg-bone rounded-full w-12 h-12 grid justify-center content-center sticky top-6 left-6"
+        <IconContainer
           onClick={() => {
             setisOpen(!isOpen);
           }}
         >
           <FontAwesomeIcon
-            className="text-black w-8 h-8"
+            className="text-accent w-8 h-8"
             icon={solid("user")}
           />
-        </div>
+        </IconContainer>
       ) : (
-        <div
-          className="z-50 bg-dark-blue dark:bg-bone rounded-full w-12 h-12 grid justify-center content-center sticky top-6 left-6"
+        <IconContainer
           onClick={() => {
             setisOpen(!isOpen);
           }}
         >
-          <FontAwesomeIcon className="text-black w-8 h-8" icon={solid("x")} />
-        </div>
+          <FontAwesomeIcon className="text-accent w-8 h-8" icon={solid("x")} />
+        </IconContainer>
       )}
 
-      <div
-        className={`grid grid-rows-5 justify-center content-center place-content-center top-0 left-0 fixed w-screen h-screen dark:bg-navy-blue bg-bone ${
-          isOpen ? "-translate-x-full" : "-translate-x-0"
-        } ease-in-out duration-300`}
+      <SideSlider
+        className={`${isOpen ? "-translate-x-full" : "-translate-x-0"}`}
       >
-        <ul className="  row-start-2	 ">
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>Registrarse</li>
-          <li></li>
-          <li></li>
-          <li></li>
+        <div className="col-start-3 justify-self-center self-center">
+          <DarkModeToggle />
+        </div>
+        <ul className="row-start-2 col-start-2">
+          <Logout className="object-center" />
         </ul>
-      </div>
+      </SideSlider>
     </>
   );
 };
+
+const SideSlider = tw.div`
+grid
+grid-rows-5
+grid-cols-3
+justify-center
+content-center
+place-content-center
+top-0 left-0
+fixed w-screen
+h-screen
+bg-secondary
+ease-in-out
+duration-300
+`;
+
+const IconContainer = tw.div`
+z-50
+bg-black
+rounded-full
+w-12
+h-12
+grid
+justify-center
+content-center
+sticky
+top-6
+left-6
+`;
 
 export default Navbar;

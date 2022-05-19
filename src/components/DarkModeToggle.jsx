@@ -11,19 +11,17 @@ const DarkModeToggle = () => {
         <button
           onClick={() => {
             setTheme("dark");
-            console.log("enabling darkmode");
           }}
         >
-          <FontAwesomeIcon icon={solid("moon")} />
+          <FontAwesomeIcon className="text-5xl" icon={solid("moon")} />
         </button>
       ) : (
         <button
           onClick={() => {
             setTheme("light");
-            console.log("enabling lightmode");
           }}
         >
-          <FontAwesomeIcon icon={solid("sun")} />
+          <FontAwesomeIcon className="text-5xl" icon={solid("sun")} />
         </button>
       )}
     </>
