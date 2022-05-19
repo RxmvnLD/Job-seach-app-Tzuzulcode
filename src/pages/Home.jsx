@@ -17,7 +17,7 @@ const Home = () => {
         setJobs(job);
       });
   }, []);
-  console.log(jobs);
+  //console.log(jobs);
   return (
     <>
       <Sidebar />
