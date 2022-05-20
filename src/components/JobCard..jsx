@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import logo from "../imports/img/logo.png";
 
 function JobCard({jobs}) {
-  console.log("==JobCard==");
-  console.log(jobs);
   return (
     <div>
       {jobs && jobs.map((job, key) => (

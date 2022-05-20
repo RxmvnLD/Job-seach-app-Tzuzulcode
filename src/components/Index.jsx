@@ -16,7 +16,6 @@ function Index() {
         setJobs(job);
       });
   }, []);
-  console.log(jobs);
 
   return (
     <div className="dark:text-white">

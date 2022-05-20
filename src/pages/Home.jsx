@@ -12,7 +12,10 @@ export const Home = () => {
         Authorization: "Bearer " + localStorage.getItem("token"),
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        res.json();
+        console.log(res);
+      })
       .then((job) => {
         setJobs(job);
       });
@@ -27,7 +30,7 @@ export const Home = () => {
       </Etiqueta>
 
       <CardContainer>
-        <JobCard jobs={jobs}/>
+        <JobCard jobs={jobs} />
       </CardContainer>
     </>
   );
@@ -42,5 +45,5 @@ const Etiqueta = styled.h1.attrs({})`
   padding: 10px;
   font-size: large;
   font-weight: 700;
-  color: lightslategray;
+  color: lightslategray; ;
 `;

@@ -3,7 +3,8 @@ import { solid, regular } from "@fortawesome/fontawesome-svg-core/import.macro";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import logo from "../imports/img/logo.png";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { Topbar } from "../components/Topbar";
 
 //Funcion para leer mas
 function ReadMore({ children = 100 }) {
@@ -31,14 +32,10 @@ function ReadMore({ children = 100 }) {
 
 //DETALLE EMPLEO
 export const DetalleEmpleo = () => {
-  const [red, setRed] = useState(false);
   const [apply, setApply] = useState(false);
   //Obtner el id de la URL
   const location = useLocation();
   const vacanteId = location.pathname.split("/")[2];
-
-  //Ir atras
-  const back = useNavigate();
 
   //Get detalles del empleo
   const [isLoading, setIsLoading] = useState(true);
@@ -104,16 +101,7 @@ export const DetalleEmpleo = () => {
   };
   return (
     <>
-      <Topbar>
-        <Icon icon={solid("arrow-left")} onClick={() => back(-1)} />
-        <Icon
-          icon={red ? solid("heart") : regular("heart")}
-          onClick={() => {
-            setRed(!red);
-          }}
-          red={red}
-        />
-      </Topbar>
+      <Topbar heart={true} />
       <CardContainer>
         <Card>
           <Img src={logo} alt={"logo"} />
@@ -165,7 +153,9 @@ export const DetalleEmpleo = () => {
         {!apply ? (
           <Button onClick={aplicar}>Aplicar</Button>
         ) : (
-          <Button onClick={desaplicar} style={{backgroundColor:"red"}}>Desaplicar</Button>
+          <Button onClick={desaplicar} style={{ backgroundColor: "red" }}>
+            Desaplicar
+          </Button>
         )}
       </BotonArea>
     </>
@@ -188,13 +178,7 @@ const Card = styled.div`
     font-weight: 400;
   }
 `;
-const Topbar = styled.div`
-  height: 50px;
-  padding: 5px 25px;
-  background-color: white;
-  display: flex;
-  justify-content: space-between;
-`;
+
 const Img = styled.img`
   width: 50px;
 `;
@@ -238,10 +222,4 @@ const BotonArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-const Icon = styled(FontAwesomeIcon)`
-  color: ${(props) => (props.red ? "red" : "black")};
-  align-self: center;
-  font-size: 20px;
-  cursor: pointer;
 `;
