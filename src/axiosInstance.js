@@ -20,3 +20,7 @@ const axiosInstance = axios.create({
 export const axiosPost = (url, data) => {
   return axiosInstance.post(url, data);
 };
+
+export const axiosGet = (url) => {
+  return axiosInstance.get(url);
+};

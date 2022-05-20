@@ -10,7 +10,7 @@ export default function SignUp() {
     name = useRef(),
     role = useRef(),
     navigate = useNavigate(),
-    { auth, setAuth } = useContext(AuthContext),
+    { setAuth } = useContext(AuthContext),
     [option, setOption] = useState("applicant"),
     url = "/auth/signup";
 
