@@ -71,8 +71,6 @@ grid
 justify-center
 content-center
 sticky
-top-6
-left-6
 `;
 
 export default Navbar;
