@@ -15,8 +15,9 @@ const WelcomeButton = ({ text, routeToGo }) => {
 const Btn = tw.button`
 bg-secondary
 text-primary
-p-5
 w-40
+
+h-10
 rounded-lg
 `;
 
