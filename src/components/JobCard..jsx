@@ -7,8 +7,8 @@ function JobCard({jobs}) {
   console.log(jobs);
   return (
     <div>
-      {jobs && jobs.map((job) => (
-        <Link
+      {jobs && jobs.map((job, key) => (
+        <Link key={key}
           to={"/vacante/"+job._id}
           className="p-6 max-w-sm bg-white rounded-lg border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 m-2 grid grid-cols-3 cursor-pointer"
         >

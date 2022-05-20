@@ -31,15 +31,14 @@ function ReadMore({ children = 100 }) {
 
 //DETALLE EMPLEO
 export const DetalleEmpleo = () => {
+  const [red, setRed] = useState(false);
+  const [apply, setApply] = useState(false);
   //Obtner el id de la URL
   const location = useLocation();
   const vacanteId = location.pathname.split("/")[2];
-  console.log(vacanteId);
 
   //Ir atras
   const back = useNavigate();
-
-  const [red, setRed] = useState(false);
 
   //Get detalles del empleo
   const [isLoading, setIsLoading] = useState(true);
@@ -67,9 +66,44 @@ export const DetalleEmpleo = () => {
       </div>
     );
   }
+  const aplicar = () => {
+    console.log(localStorage.getItem("token"));
+    fetch(
+      "https://backendnodejstzuzulcode.uw.r.appspot.com/api/jobs/apply/" +
+        vacanteId,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((jobApply) => {
+        console.log(jobApply);
+      });
+    setApply(true);
+  };
+  const desaplicar = () => {
+    console.log(localStorage.getItem("token"));
+    fetch(
+      "https://backendnodejstzuzulcode.uw.r.appspot.com/api/jobs/unapply/" +
+        vacanteId,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((jobApply) => {
+        console.log(jobApply);
+      });
+    setApply(false);
+  };
   return (
     <>
-      {" "}
       <Topbar>
         <Icon icon={solid("arrow-left")} onClick={() => back(-1)} />
         <Icon
@@ -128,7 +162,11 @@ export const DetalleEmpleo = () => {
       </CardContainer>
       <div style={{ height: "50px" }} />
       <BotonArea>
-        <Button>Aplicar</Button>
+        {!apply ? (
+          <Button onClick={aplicar}>Aplicar</Button>
+        ) : (
+          <Button onClick={desaplicar} style={{backgroundColor:"red"}}>Desaplicar</Button>
+        )}
       </BotonArea>
     </>
   );
