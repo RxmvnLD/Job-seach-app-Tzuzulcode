@@ -14,10 +14,16 @@ function Welcome() {
         <Navigate to="/home" />
       ) : (
         <Container>
-          <img src={workingLogo} alt="Logo" className="max-h-96" />
+          <img
+            src={workingLogo}
+            alt="Logo"
+            className="max-h-60 row-start-1 self-center"
+          />
           <WelcomeText>Climb higher with JobSeek app</WelcomeText>
-          <WelcomeButton text="Login" routeToGo={"/login"} />
-          <WelcomeButton text="Signup" routeToGo={"/signup"} />
+          <ButtonContainer>
+            <WelcomeButton text="Login" routeToGo={"/login"} />
+            <WelcomeButton text="Signup" routeToGo={"/signup"} />
+          </ButtonContainer>
         </Container>
       )}
     </>
@@ -25,18 +31,25 @@ function Welcome() {
 }
 
 const Container = tw.main`
-p-10
 grid
+grid-cols-1
 grid-rows-3
 justify-items-center
+items-center
 text-center
-max-h-screen
+max-w-full
 `;
-
 const WelcomeText = tw.h1`
+row-start-2
 font-bold
 text-3xl
 text-accent
+`;
+const ButtonContainer = tw.div`
+row-start-3
+flex
+flex-col
+gap-5
 `;
 
 export default Welcome;
