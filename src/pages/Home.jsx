@@ -4,6 +4,7 @@ import JobCard from "../components/JobCard";
 import Sidebar from "../components/user_sidebar/Sidebar";
 import SortBy from "../components/SortBy";
 import { axiosGet } from "../axiosInstance";
+import { Link } from "react-router-dom";
 
 const Home = () => {
   const [jobs, setJobs] = useState([]);
@@ -42,13 +43,15 @@ const Home = () => {
           <Etiqueta>Cargando empleos disponibles</Etiqueta>
         ) : (
           jobs.map((item) => (
-            <JobCard
-              key={item._id}
-              title={item.title}
-              location={item.location}
-              company={item.company}
-              salary={item.salary}
-            />
+            <Link to={`/details/${item.id}`}>
+              <JobCard
+                key={item.id}
+                title={item.title}
+                location={item.location}
+                company={item.company}
+                salary={item.salary}
+              />
+            </Link>
           ))
         )}
       </MainContainer>
