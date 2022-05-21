@@ -21,10 +21,12 @@ const Logout = () => {
 };
 
 const Btn = tw.button`
-bg-primary
+bg-secondary
 text-primary
-py-2
-w-20
+w-40
+border-white
+border-2
+h-10
 rounded-lg
 `;
 
