@@ -40,7 +40,9 @@ const Navbar = (props) => {
           <DarkModeToggle />
         </div>
         <ul className="row-start-2 col-start-2">
-          <Link to={"/me"}><Btn>Mis postulaciones</Btn></Link>
+          <Link to={"/me"}>
+            <Btn>Mis postulaciones</Btn>
+          </Link>
         </ul>
         <ul className="row-start-3 col-start-2">
           <Logout className="object-center" />

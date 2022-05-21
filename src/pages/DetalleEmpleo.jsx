@@ -56,7 +56,6 @@ export const DetalleEmpleo = () => {
         setIsLoading(false);
       });
   }, [vacanteId]);
-  console.log(job);
   if (isLoading) {
     return (
       <div className="App">
@@ -65,7 +64,6 @@ export const DetalleEmpleo = () => {
     );
   }
   const aplicar = () => {
-    console.log(localStorage.getItem("token"));
     fetch(
       "https://backendnodejstzuzulcode.uw.r.appspot.com/api/jobs/apply/" +
         vacanteId,
@@ -83,7 +81,6 @@ export const DetalleEmpleo = () => {
     setApply(true);
   };
   const desaplicar = () => {
-    console.log(localStorage.getItem("token"));
     fetch(
       "https://backendnodejstzuzulcode.uw.r.appspot.com/api/jobs/unapply/" +
         vacanteId,
@@ -117,7 +114,7 @@ export const DetalleEmpleo = () => {
               <span> 20 Oct 2022</span>
             </div>
             <div>
-              <Subtitle>Trabjo</Subtitle>
+              <Subtitle>Trabajo</Subtitle>
               <span>Hacer algo productivo</span>
             </div>
             <div>
@@ -133,9 +130,14 @@ export const DetalleEmpleo = () => {
           </BoxDetalles>
         </Card>
         <Card>
+          <Subtitle>Categorias</Subtitle>
+          <div>{job.category}</div>
+        </Card>
+        <Card>
           <Subtitle>Descripcion del trabajo</Subtitle>
           <ReadMore>{job.description}</ReadMore>
         </Card>
+
         {/* <Card>
           <Subtitle>Requisitos del trabajo</Subtitle>
           <ReadMore>

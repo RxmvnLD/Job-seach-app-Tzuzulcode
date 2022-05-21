@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import styled from "styled-components";
 import tw from "twin.macro";
 import JobCard from "../components/JobCardAlt";
 import { Topbar } from "../components/Topbar";
@@ -16,7 +15,6 @@ export const Me = () => {
     })
       .then((res) => res.json())
       .then((job) => {
-        console.log(job);
         setJobs(job);
       });
   }, []);

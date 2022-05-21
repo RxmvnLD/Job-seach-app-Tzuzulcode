@@ -6,7 +6,6 @@ import styled from "styled-components";
 import tw from "twin.macro";
 
 export const Topbar = (heart) => {
-  console.log(heart);
   const [red, setRed] = useState(false);
   //Ir atras
   const back = useNavigate();

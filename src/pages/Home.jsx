@@ -4,7 +4,6 @@ import JobCard from "../components/JobCardAlt";
 import Sidebar from "../components/user_sidebar/Sidebar";
 import styled from "styled-components";
 import { axiosGet, axiosPost } from "../axiosInstance";
-import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
