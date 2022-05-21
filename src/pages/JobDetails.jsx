@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import logo from "../imports/img/logo.png";
 import { useParams, useNavigate } from "react-router-dom";
-import { axiosGet } from "../axiosInstance";
+import { axiosGet, axiosPut } from "../axiosInstance";
 import Loader from "../components/Loader";
 //Funcion para leer mas
 function ReadMore({ children = 100 }) {
@@ -36,7 +36,8 @@ export const JobDetails = () => {
     back = useNavigate(),
     [red, setRed] = useState(false),
     [isLoading, setIsLoading] = useState(true),
-    [job, setJob] = useState(null);
+    [job, setJob] = useState(null),
+    [applied, setApplied] = useState(false);
   //Obtner el id de la URL
   const getJob = async () => {
     try {
@@ -50,6 +51,20 @@ export const JobDetails = () => {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  const applyFunc = async () => {
+    let res = await axiosPut(`/jobs/apply/${id}`),
+      json = await res.data;
+    console.log(json);
+    setApplied(true);
+  };
+
+  const unApplyFunc = async () => {
+    let res = await axiosPut(`/jobs/unapply/${id}`),
+      json = await res.data;
+    console.log(json);
+    setApplied(false);
   };
 
   useEffect(() => {
@@ -123,7 +138,13 @@ export const JobDetails = () => {
           </CardContainer>
           <div style={{ height: "50px" }} />
           <BotonArea>
-            <Button>Aplicar</Button>
+            {!applied ? (
+              <Button onClick={applyFunc}>Aplicar</Button>
+            ) : (
+              <Button onClick={unApplyFunc} style={{ backgroundColor: "red" }}>
+                Desaplicar
+              </Button>
+            )}
           </BotonArea>
         </>
       )}
