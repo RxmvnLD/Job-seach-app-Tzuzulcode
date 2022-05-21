@@ -63,7 +63,6 @@ duration-300
 
 const IconContainer = tw.div`
 z-50
-bg-black
 rounded-full
 w-12
 h-12
