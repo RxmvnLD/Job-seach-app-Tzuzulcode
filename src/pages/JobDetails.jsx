@@ -52,18 +52,15 @@ export const JobDetails = () => {
   };
 
   const applyFunc = async () => {
-    let res = await axiosPut(`/jobs/apply/${id}`),
-      json = await res.data;
-    //console.log(json);
+    await axiosPut(`/jobs/apply/${id}`);
     setApplied(true);
   };
 
   const unApplyFunc = async () => {
-    let res = await axiosPut(`/jobs/unapply/${id}`),
-      json = await res.data;
-    //console.log(json);
+    await axiosPut(`/jobs/unapply/${id}`);
     setApplied(false);
   };
+
   const getAppliedJobs = async () => {
     try {
       let res = await axiosPost("/jobs/me"),

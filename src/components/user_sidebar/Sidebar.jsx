@@ -4,6 +4,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import tw from "twin.macro";
 import DarkModeToggle from "../DarkModeToggle";
 import Logout from "./Logout";
+import ButtonLink from "../ButtonLink";
 
 //Agregar ternario para mostrar login-register/datos dependiendo si esta logeado
 
@@ -38,9 +39,15 @@ const Navbar = (props) => {
         <div className="col-start-3 justify-self-center self-center">
           <DarkModeToggle />
         </div>
-        <ul className="row-start-2 col-start-2">
-          <Logout className="object-center" />
-        </ul>
+        <ButtonContainer>
+          <ButtonLink text={"Inicio"} routeToGo="/home" border={true} />
+          <ButtonLink
+            text={"Mis postulaciones"}
+            routeToGo="/myapplications"
+            border={true}
+          />
+          <Logout />
+        </ButtonContainer>
       </SideSlider>
     </>
   );
@@ -70,6 +77,14 @@ grid
 justify-center
 content-center
 sticky
+`;
+const ButtonContainer = tw.div`
+row-start-2
+col-span-3
+items-center
+flex
+flex-col
+gap-5
 `;
 
 export default Navbar;

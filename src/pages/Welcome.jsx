@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import workingLogo from "../imports/img/working-logo.png";
 import tw from "twin.macro";
-import WelcomeButton from "../components/WelcomeButton";
+import ButtonLink from "../components/ButtonLink";
 import AuthContext from "../Context/AuthContext";
 import { Navigate } from "react-router-dom";
 
@@ -21,8 +21,8 @@ function Welcome() {
           />
           <WelcomeText>Climb higher with JobSeek app</WelcomeText>
           <ButtonContainer>
-            <WelcomeButton text="Login" routeToGo={"/login"} />
-            <WelcomeButton text="Signup" routeToGo={"/signup"} />
+            <ButtonLink text="Login" routeToGo={"/login"} />
+            <ButtonLink text="Signup" routeToGo={"/signup"} />
           </ButtonContainer>
         </Container>
       )}
