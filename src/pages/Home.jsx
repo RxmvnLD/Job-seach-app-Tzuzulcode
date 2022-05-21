@@ -5,6 +5,7 @@ import Sidebar from "../components/user_sidebar/Sidebar";
 import SortBy from "../components/SortBy";
 import { axiosGet } from "../axiosInstance";
 import { Link } from "react-router-dom";
+import Loader from "../components/Loader";
 
 const Home = () => {
   const [jobs, setJobs] = useState([]);
@@ -40,7 +41,9 @@ const Home = () => {
         <Etiqueta>Vacantes destacadas</Etiqueta>
         <SortBy />
         {jobs.length === 0 ? (
-          <Etiqueta>Cargando empleos disponibles</Etiqueta>
+          <>
+            <Loader />
+          </>
         ) : (
           jobs.map((item) => (
             <Link to={`/details/${item.id}`}>

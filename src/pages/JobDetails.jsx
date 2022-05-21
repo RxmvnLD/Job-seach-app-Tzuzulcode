@@ -5,7 +5,7 @@ import styled from "styled-components";
 import logo from "../imports/img/logo.png";
 import { useParams, useNavigate } from "react-router-dom";
 import { axiosGet } from "../axiosInstance";
-
+import Loader from "../components/Loader";
 //Funcion para leer mas
 function ReadMore({ children = 100 }) {
   const text = children;
@@ -59,7 +59,9 @@ export const JobDetails = () => {
   return (
     <>
       {isLoading ? (
-        <h1>Cargando...</h1>
+        <>
+          <Loader />
+        </>
       ) : (
         <>
           <Topbar>
