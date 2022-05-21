@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import logo from "../imports/img/logo.png";
 import { useParams, useNavigate } from "react-router-dom";
-import { axiosGet, axiosPut } from "../axiosInstance";
+import { axiosGet, axiosPut, axiosPost } from "../axiosInstance";
 import Loader from "../components/Loader";
 //Funcion para leer mas
 function ReadMore({ children = 100 }) {
@@ -41,13 +41,11 @@ export const JobDetails = () => {
   //Obtner el id de la URL
   const getJob = async () => {
     try {
-      let res = await axiosGet(
-          `/jobs/${id}` /* "https://backendnodejstzuzulcode.uw.r.appspot.com/api/jobs/6283145b8af7034b7f7ecdfc" */
-        ),
+      let res = await axiosGet(`/jobs/${id}`),
         json = await res.data;
-      await console.log(json);
-      setJob(json);
-      setIsLoading(false);
+      //await console.log(json);
+      await setJob(json);
+      await setIsLoading(false);
     } catch (error) {
       console.log(error);
     }
@@ -56,18 +54,33 @@ export const JobDetails = () => {
   const applyFunc = async () => {
     let res = await axiosPut(`/jobs/apply/${id}`),
       json = await res.data;
-    console.log(json);
+    //console.log(json);
     setApplied(true);
   };
 
   const unApplyFunc = async () => {
     let res = await axiosPut(`/jobs/unapply/${id}`),
       json = await res.data;
-    console.log(json);
+    //console.log(json);
     setApplied(false);
+  };
+  const getAppliedJobs = async () => {
+    try {
+      let res = await axiosPost("/jobs/me"),
+        json = await res.data;
+      //console.log(json);
+      json.forEach((item) => {
+        if (item._id === id) {
+          setApplied(true);
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
+    getAppliedJobs();
     getJob();
   }, [id]);
 
