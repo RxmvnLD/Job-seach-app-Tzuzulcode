@@ -4,6 +4,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import tw from "twin.macro";
 import DarkModeToggle from "../DarkModeToggle";
 import Logout from "./Logout";
+import { Link } from "react-router-dom";
 
 //Agregar ternario para mostrar login-register/datos dependiendo si esta logeado
 
@@ -39,6 +40,9 @@ const Navbar = (props) => {
           <DarkModeToggle />
         </div>
         <ul className="row-start-2 col-start-2">
+          <Link to={"/me"}><Btn>Mis postulaciones</Btn></Link>
+        </ul>
+        <ul className="row-start-3 col-start-2">
           <Logout className="object-center" />
         </ul>
       </SideSlider>
@@ -60,7 +64,13 @@ bg-secondary
 ease-in-out
 duration-300
 `;
-
+const Btn = tw.button`
+bg-primary
+text-primary
+py-2
+w-20
+rounded-lg
+`;
 const IconContainer = tw.div`
 z-50
 bg-black

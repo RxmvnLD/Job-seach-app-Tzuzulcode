@@ -1,9 +1,11 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { solid, regular } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import logo from "../imports/img/logo.png";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { Topbar } from "../components/Topbar";
+import tw from "twin.macro";
 
 //Funcion para leer mas
 function ReadMore({ children = 100 }) {
@@ -31,15 +33,10 @@ function ReadMore({ children = 100 }) {
 
 //DETALLE EMPLEO
 export const DetalleEmpleo = () => {
+  const [apply, setApply] = useState(false);
   //Obtner el id de la URL
   const location = useLocation();
   const vacanteId = location.pathname.split("/")[2];
-  console.log(vacanteId);
-
-  //Ir atras
-  const back = useNavigate();
-
-  const [red, setRed] = useState(false);
 
   //Get detalles del empleo
   const [isLoading, setIsLoading] = useState(true);
@@ -67,19 +64,45 @@ export const DetalleEmpleo = () => {
       </div>
     );
   }
+  const aplicar = () => {
+    console.log(localStorage.getItem("token"));
+    fetch(
+      "https://backendnodejstzuzulcode.uw.r.appspot.com/api/jobs/apply/" +
+        vacanteId,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((jobApply) => {
+        console.log(jobApply);
+      });
+    setApply(true);
+  };
+  const desaplicar = () => {
+    console.log(localStorage.getItem("token"));
+    fetch(
+      "https://backendnodejstzuzulcode.uw.r.appspot.com/api/jobs/unapply/" +
+        vacanteId,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((jobApply) => {
+        console.log(jobApply);
+      });
+    setApply(false);
+  };
   return (
     <>
-      {" "}
-      <Topbar>
-        <Icon icon={solid("arrow-left")} onClick={() => back(-1)} />
-        <Icon
-          icon={red ? solid("heart") : regular("heart")}
-          onClick={() => {
-            setRed(!red);
-          }}
-          red={red}
-        />
-      </Topbar>
+      <Topbar heart={true} />
       <CardContainer>
         <Card>
           <Img src={logo} alt={"logo"} />
@@ -113,7 +136,7 @@ export const DetalleEmpleo = () => {
           <Subtitle>Descripcion del trabajo</Subtitle>
           <ReadMore>{job.description}</ReadMore>
         </Card>
-        <Card>
+        {/* <Card>
           <Subtitle>Requisitos del trabajo</Subtitle>
           <ReadMore>
             Lorem, ipsum dolor sit amet consectetur adipisicing elit. Delectus,
@@ -124,39 +147,49 @@ export const DetalleEmpleo = () => {
             veritatis similique? Nam fugit saepe id unde minima, dolores
             voluptates error, ex laborum omnis maiores.
           </ReadMore>
-        </Card>
+        </Card> */}
       </CardContainer>
       <div style={{ height: "50px" }} />
       <BotonArea>
-        <Button>Aplicar</Button>
+        {!apply ? (
+          <Button onClick={aplicar}>Aplicar</Button>
+        ) : (
+          <Button onClick={desaplicar} style={{ backgroundColor: "red" }}>
+            Desaplicar
+          </Button>
+        )}
       </BotonArea>
     </>
   );
 };
-const CardContainer = styled.div`
-  margin: 0 auto;
-  display: grid;
-  grid-gap: 10px;
-  grid-template-columns: repeat(auto-fill, minmax(20rem, 1fr));
+const CardContainer = tw.main`
+flex 
+flex-wrap flex-col
 `;
-const Card = styled.div`
-  padding: 25px 30px;
-  background-color: white;
-  margin: 0px 0px 5px 0px;
-  border-radius: 4px;
+const Card = tw.div`
+  // padding: 25px 30px;
+  // background-color: white;
+  // margin: 0px 0px 5px 0px;
+  // border-radius: 4px;
+  // & span {
+  //   font-size: 12px;
+  //   font-weight: 400;
+  // }
+  p-6
+max-w-xl
+bg-secondary
+rounded-lg
+border
+border-gray-200
+shadow-md
+hover:bg-gray-100
+dark:bg-gray-800
+dark:border-gray-700
+dark:hover:bg-gray-700
+m-2
 
-  & span {
-    font-size: 12px;
-    font-weight: 400;
-  }
 `;
-const Topbar = styled.div`
-  height: 50px;
-  padding: 5px 25px;
-  background-color: white;
-  display: flex;
-  justify-content: space-between;
-`;
+
 const Img = styled.img`
   width: 50px;
 `;
@@ -200,10 +233,4 @@ const BotonArea = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-const Icon = styled(FontAwesomeIcon)`
-  color: ${(props) => (props.red ? "red" : "black")};
-  align-self: center;
-  font-size: 20px;
-  cursor: pointer;
 `;
