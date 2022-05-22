@@ -8,7 +8,7 @@ const loggedOut = { logged: false, email: "", name: "", id: "" },
     method: "POST",
     headers: {
       "Content-type": "application/json; charset=utf-8",
-      Authorization: `Bearer ${storedToken}`,
+      Authorization: `Basic ${storedToken}`,
     },
     redirect: "follow",
   };
@@ -44,7 +44,7 @@ const AuthProvider = ({ children }) => {
       validateSession(url, options);
     }
   }, []);
-  console.log(storedToken);
+  //console.log(auth);
 
   return (
     <AuthContext.Provider

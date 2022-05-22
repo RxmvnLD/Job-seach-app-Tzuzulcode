@@ -2,9 +2,9 @@ import React from "react";
 import tw from "twin.macro";
 import logo from "../imports/img/logo.png";
 
-function JobCard({ title, location, company, salary, key }) {
+function JobCard({ title, location, company, salary }) {
   return (
-    <JobContainer key={key}>
+    <JobContainer>
       <img src={logo} alt="Company logo" className="row-span-3" />
       <InfoContainer>
         <JobTitle>{title}</JobTitle>
@@ -18,7 +18,7 @@ function JobCard({ title, location, company, salary, key }) {
 
 const JobContainer = tw.div`
 p-6
-max-w-lg
+max-w-sm
 bg-secondary
 rounded-lg
 border
