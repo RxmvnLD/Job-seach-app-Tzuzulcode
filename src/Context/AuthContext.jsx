@@ -1,5 +1,6 @@
 /* eslint-disable no-throw-literal */
 import React, { createContext, useState, useEffect } from "react";
+
 const AuthContext = createContext();
 const loggedOut = { logged: false, email: "", name: "", id: "" },
   storedToken = window.localStorage.getItem("token"),
@@ -8,7 +9,7 @@ const loggedOut = { logged: false, email: "", name: "", id: "" },
     method: "POST",
     headers: {
       "Content-type": "application/json; charset=utf-8",
-      Authorization: `Basic ${storedToken}`,
+      Authorization: `Bearer ${storedToken}`,
     },
     redirect: "follow",
   };

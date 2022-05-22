@@ -14,7 +14,7 @@ const MyApplications = () => {
     try {
       let res = await axiosPost("/jobs/me"),
         json = await res.data;
-      console.log(json);
+      //console.log(json);
       json.forEach((element) => {
         let job = {
           title: element.title,
@@ -65,12 +65,14 @@ const MainContainer = tw.main`
 top-56
 grid
 grid-cols-1
+gap-2.5
 `;
 
 const Etiqueta = tw.h1`
 text-3xl
 text-primary
 font-bold
+justify-self-center
 `;
 
 export default MyApplications;

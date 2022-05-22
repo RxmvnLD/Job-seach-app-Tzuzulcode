@@ -66,6 +66,7 @@ h-screen
 bg-secondary
 ease-in-out
 duration-300
+z-10
 `;
 
 const IconContainer = tw.div`
