@@ -14,7 +14,7 @@ const MyApplications = () => {
     try {
       let res = await axiosPost("/jobs/me"),
         json = await res.data;
-      //console.log(json);
+      console.log(json);
       json.forEach((element) => {
         let job = {
           title: element.title,
@@ -22,6 +22,7 @@ const MyApplications = () => {
           company: element.employer.name,
           salary: element.salary,
           id: element._id,
+          applicants: json.length.toString(),
         };
         setJobs((jobs) => [...jobs, job]);
       });
@@ -53,6 +54,7 @@ const MyApplications = () => {
                 location={item.location}
                 company={item.company}
                 salary={item.salary}
+                applicants={item.applicants}
               />
             </Link>
           ))

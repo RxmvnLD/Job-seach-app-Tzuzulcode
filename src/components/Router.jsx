@@ -7,6 +7,7 @@ import Home from "../pages/Home";
 import { JobDetails } from "../pages/JobDetails";
 import NotFound from "../pages/NotFound";
 import MyApplications from "../pages/MyApplications";
+import CreateJob from "../pages/CreateJob";
 
 const Router = () => {
   return (
@@ -17,6 +18,7 @@ const Router = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/home" element={<Home />} />
         <Route path="/myapplications" element={<MyApplications />} />
+        <Route path="/createjob" element={<CreateJob />} />
         <Route path="/details/:id" element={<JobDetails />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

@@ -20,7 +20,7 @@ export default function Login() {
     try {
       let res = await axiosPost(url, loginData),
         json = await res.data;
-      console.log(json);
+      //console.log(json);
       if (typeof window !== "undefined" && window.localStorage) {
         await localStorage.setItem("token", json.token);
       }

@@ -13,7 +13,9 @@ const ButtonLink = ({ text, routeToGo, border }) => {
 };
 
 const Btn = styled.button(({ border }) => [
-  border && tw`border-2 border-white`,
+  border &&
+    tw`border-2 border-blue-700
+  dark:border-white`,
   tw`bg-secondary`,
   tw`text-primary`,
   tw`w-40`,

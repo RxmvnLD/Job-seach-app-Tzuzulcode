@@ -1,51 +1,34 @@
 /* eslint-disable no-throw-literal */
 import React, { createContext, useState, useEffect } from "react";
-
+import { getToken, axiosPost } from "../axiosInstance";
 const AuthContext = createContext();
-const loggedOut = { logged: false, email: "", name: "", id: "" },
-  storedToken = window.localStorage.getItem("token"),
-  url = "https://backendnodejstzuzulcode.uw.r.appspot.com/api/auth/validate",
-  options = {
-    method: "POST",
-    headers: {
-      "Content-type": "application/json; charset=utf-8",
-      Authorization: `Bearer ${storedToken}`,
-    },
-    redirect: "follow",
-  };
+const loggedOut = { logged: false, email: "", name: "", id: "", role: "" },
+  url = "/auth/validate";
 
 const AuthProvider = ({ children }) => {
   const [auth, setAuth] = useState(loggedOut);
-
   useEffect(() => {
-    const validateSession = async (url, options) => {
+    const validateSession = async (url) => {
       try {
-        let res = await fetch(url, options);
-        if (!res.ok) {
-          throw {
-            error: true,
-            status: res.status,
-            statusText: !res.statusText ? "Ocurrió un error" : res.statusText,
-          };
-        }
-        let data = await res.json();
-        //console.log(data);
+        let res = await axiosPost(url),
+          json = res.data;
+        console.log(json);
         const userData = await {
-          logged: data.logged,
-          email: data.user.email,
-          name: data.user.name,
-          id: data.user.name,
+          logged: json.logged,
+          email: json.user.email,
+          name: json.user.name,
+          id: json.user.name,
+          role: json.user.role,
         };
         await setAuth(userData);
       } catch (error) {
-        console.log(error);
+        console.log(error.response);
       }
     };
-    if (storedToken) {
-      validateSession(url, options);
+    if (getToken()) {
+      validateSession(url);
     }
   }, []);
-  //console.log(auth);
 
   return (
     <AuthContext.Provider

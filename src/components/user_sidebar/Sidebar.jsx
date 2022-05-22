@@ -1,15 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import tw from "twin.macro";
 import DarkModeToggle from "../DarkModeToggle";
 import Logout from "./Logout";
 import ButtonLink from "../ButtonLink";
+import AuthContext from "../../Context/AuthContext";
 
 //Agregar ternario para mostrar login-register/datos dependiendo si esta logeado
 
 const Navbar = (props) => {
-  const [isOpen, setisOpen] = useState(true);
+  const [isOpen, setisOpen] = useState(true),
+    { auth } = useContext(AuthContext);
   return (
     <>
       {isOpen ? (
@@ -41,11 +43,20 @@ const Navbar = (props) => {
         </div>
         <ButtonContainer>
           <ButtonLink text={"Inicio"} routeToGo="/home" border={true} />
-          <ButtonLink
-            text={"Mis postulaciones"}
-            routeToGo="/myapplications"
-            border={true}
-          />
+          {auth.role === "applicant" ? (
+            <ButtonLink
+              text={"Mis postulaciones"}
+              routeToGo="/myapplications"
+              border={true}
+            />
+          ) : (
+            <ButtonLink
+              text={"Crear vacante"}
+              routeToGo="/createjob"
+              border={true}
+            />
+          )}
+
           <Logout />
         </ButtonContainer>
       </SideSlider>
@@ -78,6 +89,7 @@ grid
 justify-center
 content-center
 sticky
+m-4
 `;
 const ButtonContainer = tw.div`
 row-start-2
