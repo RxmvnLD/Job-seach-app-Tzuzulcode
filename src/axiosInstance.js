@@ -24,3 +24,7 @@ export const axiosPost = (url, data) => {
 export const axiosGet = (url) => {
   return axiosInstance.get(url);
 };
+
+export const axiosPut = (url) => {
+  return axiosInstance.put(url);
+};
