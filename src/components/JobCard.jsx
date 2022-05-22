@@ -2,7 +2,7 @@ import React from "react";
 import tw from "twin.macro";
 import logo from "../imports/img/logo.png";
 
-function JobCard({ title, location, company, salary }) {
+function JobCard({ title, location, company, salary, applicants }) {
   return (
     <JobContainer>
       <img src={logo} alt="Company logo" className="row-span-3" />
@@ -11,6 +11,7 @@ function JobCard({ title, location, company, salary }) {
         <JobText>${salary}</JobText>
         <JobText>{location}</JobText>
         <JobText>{company}</JobText>
+        <JobText>Postulaciones: {applicants}</JobText>
       </InfoContainer>
     </JobContainer>
   );
