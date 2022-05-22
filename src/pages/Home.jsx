@@ -9,7 +9,7 @@ import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 
 const Home = () => {
   const [jobs, setJobs] = useState();
-  const [filter, setFilter] = useState();
+  const [filter, setFilter] = useState("Todos");
   const [key, setKey] = useState();
 
   useEffect(() => {
@@ -25,10 +25,23 @@ const Home = () => {
     getJobs();
   }, []);
 
+
+  //Si el select esta en Todos se renderizan las vacantes
+  //TODO: Agregar el efecto de cargando
+  if (filter === "Todos") {
+    const getJobs = async () => {
+      try {
+        const res = await axiosGet("/jobs"),
+          json = res.data;
+        setJobs(json);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getJobs();
+  }
+
   const filtro = async (filtroBy, category) => {
-    console.log("===Filtro===");
-    console.log(filtroBy);
-    console.log(category);
     try {
       const res = await axiosPost("/jobs/" + filtroBy, {
         category: [category],
@@ -55,18 +68,20 @@ const Home = () => {
               <option value={"location"}>Ubicacion</option>
             </Select>
           </div>
-          <div>
-            <Search
-              onChange={(e) => setKey(e.target.value)}
-              type="search"
-              name="search"
-              id=""
-              placeholder={"Buscar por: " + filter}
-            />
-            <Button onClick={() => filtro(filter, key)}>
-              <Icon icon={solid("magnifying-glass")} />
-            </Button>
-          </div>
+          {filter !== "Todos" && (
+            <div>
+              <Search
+                onChange={(e) => setKey(e.target.value)}
+                type="search"
+                name="search"
+                id=""
+                placeholder={"Buscar por: " + filter}
+              />
+              <Button onClick={() => filtro(filter, key)}>
+                <Icon icon={solid("magnifying-glass")} />
+              </Button>
+            </div>
+          )}
         </FiltroContainer>
         {!jobs ? (
           <Etiqueta>Cargando empleos disponibles</Etiqueta>
