@@ -7,7 +7,8 @@ import Home from "../pages/Home";
 import { DetalleEmpleo } from "../pages/DetalleEmpleo";
 import  AuthContext  from"../Context/AuthContext";
 import { Me } from "../pages/Me";
-import { NotFound } from "../pages/NotFound";
+import NotFound  from "../pages/NotFound";
+import MyApplications  from "../pages/MyApplications";
 
 
 function Redirect({ to }) {
@@ -33,7 +34,7 @@ const Router = () => {
           <Routes>
             <Route path="/" element={<Welcome />} />
             <Route path="/home" element={<Home />} />
-            <Route path="/me" element={<Me />} />
+            <Route path="/myapplications" element={<Me />} />
             <Route path="/vacante/:id" element={<DetalleEmpleo />} />
             <Route
               path="/login"

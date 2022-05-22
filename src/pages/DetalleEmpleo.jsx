@@ -6,6 +6,7 @@ import logo from "../imports/img/logo.png";
 import { useLocation } from "react-router-dom";
 import { Topbar } from "../components/Topbar";
 import tw from "twin.macro";
+import Loader from "../components/Loader";
 
 //Funcion para leer mas
 function ReadMore({ children = 100 }) {
@@ -59,7 +60,7 @@ export const DetalleEmpleo = () => {
   if (isLoading) {
     return (
       <div className="App">
-        <h1>Cargando...</h1>
+        <Loader/>
       </div>
     );
   }
@@ -169,14 +170,6 @@ flex
 flex-wrap flex-col
 `;
 const Card = tw.div`
-  // padding: 25px 30px;
-  // background-color: white;
-  // margin: 0px 0px 5px 0px;
-  // border-radius: 4px;
-  // & span {
-  //   font-size: 12px;
-  //   font-weight: 400;
-  // }
   p-6
 max-w-xl
 bg-secondary
@@ -184,7 +177,6 @@ rounded-lg
 border
 border-gray-200
 shadow-md
-hover:bg-gray-100
 dark:bg-gray-800
 dark:border-gray-700
 dark:hover:bg-gray-700

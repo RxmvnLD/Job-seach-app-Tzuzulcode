@@ -6,40 +6,40 @@ import styled from "styled-components";
 import { axiosGet, axiosPost } from "../axiosInstance";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import Loader from "../components/Loader";
 
 const Home = () => {
   const [jobs, setJobs] = useState();
   const [filter, setFilter] = useState("Todos");
   const [key, setKey] = useState();
 
-  useEffect(() => {
-    const getJobs = async () => {
-      try {
-        const res = await axiosGet("/jobs"),
-          json = res.data;
-        setJobs(json);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getJobs();
-  }, []);
-
+  // useEffect(() => {
+  //   const getJobs = async () => {
+  //     try {
+  //       const res = await axiosGet("/jobs");
+  //       setJobs(res.data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   getJobs();
+  // }, []);
 
   //Si el select esta en Todos se renderizan las vacantes
   //TODO: Agregar el efecto de cargando
-  if (filter === "Todos") {
-    const getJobs = async () => {
-      try {
-        const res = await axiosGet("/jobs"),
-          json = res.data;
-        setJobs(json);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getJobs();
-  }
+  useEffect(() => {
+    if (filter === "Todos") {
+      const getJobs = async () => {
+        try {
+          const res = await axiosGet("/jobs");
+          setJobs(res.data);
+        } catch (error) {
+          console.log(error);
+        }
+      };
+      getJobs();
+    }
+  }, [filter]);
 
   const filtro = async (filtroBy, category) => {
     try {
@@ -47,7 +47,6 @@ const Home = () => {
         category: [category],
         country: category,
       });
-      console.log(res.data);
       setJobs(res.data);
     } catch (error) {
       console.log(error);
@@ -84,7 +83,10 @@ const Home = () => {
           )}
         </FiltroContainer>
         {!jobs ? (
-          <Etiqueta>Cargando empleos disponibles</Etiqueta>
+          <>
+            <Etiqueta>Cargando empleos disponibles</Etiqueta>
+            <Loader />
+          </>
         ) : (
           <JobCard jobs={jobs} />
         )}

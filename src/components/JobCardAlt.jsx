@@ -6,7 +6,7 @@ function JobCard({ jobs }) {
   console.log(jobs);
   return (
     <div>
-      {jobs.length > 1
+      {jobs && jobs.length > 1
         ? jobs.map((job, key) => (
             <Link
               key={key}

@@ -67,13 +67,7 @@ bg-secondary
 ease-in-out
 duration-300
 `;
-const Btn = tw.button`
-bg-primary
-text-primary
-py-2
-w-20
-rounded-lg
-`;
+
 const IconContainer = tw.div`
 z-50
 rounded-full
