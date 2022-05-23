@@ -12,7 +12,7 @@ const AuthProvider = ({ children }) => {
       try {
         let res = await axiosPost(url),
           json = res.data;
-        console.log(json);
+        //console.log(json);
         const userData = await {
           logged: json.logged,
           email: json.user.email,
