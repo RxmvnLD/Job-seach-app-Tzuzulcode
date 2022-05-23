@@ -30,14 +30,14 @@ const Home = () => {
         setJobs((jobs) => [...jobs, job]);
       });
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
   const getOffers = async () => {
     try {
       let res = await axiosPost("/jobs/employer"),
         json = await res.data;
-      console.log(json);
+      //console.log(json);
       json.forEach((element) => {
         let offer = {
           title: element.title,
@@ -47,9 +47,63 @@ const Home = () => {
           id: element._id,
           applicants: element.applicants.length.toString(),
         };
-        console.log(element.applicants.length);
+        //console.log(element.applicants.length);
         setOffers((offers) => [...offers, offer]);
       });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const categoriesSearch = async (categories) => {
+    //console.log("State categories", categories);
+    let catsBody = { category: categories };
+    try {
+      let res = await axiosPost("/jobs/category", catsBody),
+        json = await res.data;
+      //console.log(json);
+      if (jobs.length !== 0) {
+        setJobs([]);
+        json.forEach((element) => {
+          let job = {
+            title: element.title,
+            location: element.location.country,
+            company: element.employer.name,
+            salary: element.salary,
+            id: element._id,
+            applicants: element.applicants.length.toString(),
+          };
+          setJobs((jobs) => [...jobs, job]);
+        });
+      } else {
+        getJobs();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+  const locationSearch = async (location) => {
+    //console.log("State locations", location);
+    try {
+      let res = await axiosPost("/jobs/location", location),
+        json = await res.data;
+      //console.log(json);
+      if (jobs.length !== 0) {
+        setJobs([]);
+        json.forEach((element) => {
+          let job = {
+            title: element.title,
+            location: element.location.country,
+            company: element.employer.name,
+            salary: element.salary,
+            id: element._id,
+            applicants: element.applicants.length.toString(),
+          };
+          setJobs((jobs) => [...jobs, job]);
+        });
+      } else {
+        getJobs();
+      }
     } catch (error) {
       console.log(error);
     }
@@ -65,12 +119,17 @@ const Home = () => {
       <MainContainer>
         <Sidebar />
         {auth.role === "applicant" ? (
-          <Etiqueta>Vacantes destacadas</Etiqueta>
+          <>
+            <Etiqueta>Vacantes destacadas</Etiqueta>
+            <SortBy
+              sendCategories={categoriesSearch}
+              sendLocations={locationSearch}
+            />
+          </>
         ) : (
           <Etiqueta>Mis Empleos Publicados</Etiqueta>
         )}
 
-        <SortBy />
         {auth.role === "applicant" ? (
           jobs.length === 0 ? (
             <Loader />

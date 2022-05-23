@@ -3,9 +3,10 @@ import { axiosGet } from "../axiosInstance";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import tw from "twin.macro";
-import DropDownMenu from "./DropDownMenu";
+import { useNavigate } from "react-router-dom";
 
-function SortBy() {
+function SortBy({ sendCategories, sendLocations }) {
+  const navigate = useNavigate();
   //Opened dropdowns
   const [isOpen, setIsOpen] = useState(false),
     [catIsOpen, setCatIsOpen] = useState(false),
@@ -23,11 +24,8 @@ function SortBy() {
   const catArr = [],
     countArr = [],
     provArr = [],
-    citiArr = [],
-    filtCatArr = [],
-    filtCountArr = [],
-    filtProvArr = [],
-    filtCitiArr = [];
+    citiArr = [];
+
   const getCategories = async () => {
     try {
       let res = await axiosGet("/jobs"),
@@ -38,7 +36,7 @@ function SortBy() {
       });
       await setCategories([...new Set(categoriesArr)]);
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
 
@@ -58,12 +56,21 @@ function SortBy() {
       await setProvinces([...new Set(provincesArr)]);
       await setCities([...new Set(citiesArr)]);
     } catch (error) {
-      console.log(error);
+      //console.log(error);
     }
   };
-  /* console.log(categories);
-  console.log(countries, provinces, cities); */
-  //console.log(categoriesSel);
+  useEffect(() => {
+    let location = {
+      country: countsSel.join(),
+      province: provSel.join(),
+      city: citSel.join(),
+    };
+    sendLocations(location);
+  }, [countsSel, provSel, citSel]);
+
+  useEffect(() => {
+    sendCategories(catSel);
+  }, [catSel]);
 
   useEffect(() => {
     getCategories();
@@ -112,12 +119,25 @@ function SortBy() {
                   <DropdDown>
                     <MenuDivider>
                       <OptionsContainer>
+                        <ApplyBtn
+                          onClick={() => {
+                            setCatSel([...new Set(catArr)]);
+                          }}
+                        >
+                          Aplicar
+                        </ApplyBtn>
                         {categories.map((el) => (
                           <label className="text-black inline-block">
                             <input
                               type="checkbox"
                               value={el}
-                              onChange={(event) => {}}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  catArr.push(e.target.value);
+                                } else {
+                                  navigate(-1);
+                                }
+                              }}
                             />
                             {el}
                           </label>
@@ -153,9 +173,28 @@ function SortBy() {
                   <DropdDown>
                     <MenuDivider>
                       <OptionsContainer>
+                        <ApplyBtn
+                          onClick={() => {
+                            setCountSel([...new Set(countArr)]);
+                            setProvSel([...new Set(provArr)]);
+                            setCitSel([...new Set(citiArr)]);
+                          }}
+                        >
+                          Aplicar
+                        </ApplyBtn>
                         {countries.map((el) => (
                           <label className="text-black inline-block">
-                            <input type="checkbox" value={el} />
+                            <input
+                              type="checkbox"
+                              value={el}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  countArr.push(e.target.value);
+                                } else {
+                                  navigate(-1);
+                                }
+                              }}
+                            />
                             {el}
                           </label>
                         ))}
@@ -165,7 +204,16 @@ function SortBy() {
                       <OptionsContainer>
                         {provinces.map((el) => (
                           <label className="text-black inline-block">
-                            <input type="checkbox" value={el} />
+                            <input
+                              type="checkbox"
+                              value={el}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  provArr.push(e.target.value);
+                                  ////console.log(provArr);
+                                }
+                              }}
+                            />
                             {el}
                           </label>
                         ))}
@@ -175,7 +223,16 @@ function SortBy() {
                       <OptionsContainer>
                         {cities.map((el) => (
                           <label className="text-black inline-block">
-                            <input type="checkbox" value={el} />
+                            <input
+                              type="checkbox"
+                              value={el}
+                              onChange={(e) => {
+                                if (e.target.checked) {
+                                  citiArr.push(e.target.value);
+                                  ////console.log(citiArr);
+                                }
+                              }}
+                            />
                             {el}
                           </label>
                         ))}
@@ -223,6 +280,28 @@ focus:ring-offset-2
 focus:ring-offset-gray-100
 focus:ring-indigo-500`;
 
+const ApplyBtn = tw.button`
+inline-flex
+justify-center
+text-black
+bg-green-400
+w-36
+self-center
+rounded-md
+border
+border-gray-300
+shadow-sm px-4
+py-2
+text-sm
+font-medium
+text-gray-700
+focus:outline-none
+focus:ring-2
+focus:ring-offset-2
+focus:ring-offset-gray-100
+focus:ring-indigo-500
+`;
+
 const DropdDown = tw.div`
 origin-top-right
 absolute
@@ -251,4 +330,5 @@ flex-col
 const MenuText = tw.h2`
 text-lg mx-2
 `;
+
 export default SortBy;
