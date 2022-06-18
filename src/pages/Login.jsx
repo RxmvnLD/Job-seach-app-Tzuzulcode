@@ -49,13 +49,13 @@ export default function Login() {
             ref={email}
             placeholder="Email..."
             type="email"
-            className="text-black col-start-2"
+            className="col-start-2 text-black"
           />
           <input
             ref={password}
             placeholder="Password..."
             type="password"
-            className="text-black col-start-2"
+            className="col-start-2 text-black"
           />
           <LoginBtn>Login</LoginBtn>
         </FormContainer>
