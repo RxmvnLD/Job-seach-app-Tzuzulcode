@@ -40,7 +40,6 @@ const MyApplications = () => {
       <MainContainer>
         <Sidebar />
         <Etiqueta>Mis postulaciones</Etiqueta>
-        <SortBy />
         {jobs.length === 0 ? (
           <>
             <Loader />

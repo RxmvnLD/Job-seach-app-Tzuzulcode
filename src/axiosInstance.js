@@ -9,7 +9,8 @@ export const getToken = () => {
 };
 
 const axiosInstance = axios.create({
-  baseURL: "https://backendnodejstzuzulcode.uw.r.appspot.com/api",
+  //baseURL: "https://jobsearchapp-backend.uc.r.appspot.com/api",
+  baseURL: "http://localhost:8080/api",
   headers: {
     "Content-type": "application/json; charset=utf-8",
     Authorization: `Bearer ${getToken()}`,

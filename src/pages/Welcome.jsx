@@ -17,7 +17,7 @@ function Welcome() {
           <img
             src={workingLogo}
             alt="Logo"
-            className="max-h-60 row-start-1 self-center"
+            className="max-h-44 row-start-2 self-end"
           />
           <WelcomeText>Climb higher with JobSeek app</WelcomeText>
           <ButtonContainer>
@@ -33,20 +33,20 @@ function Welcome() {
 const Container = tw.main`
 grid
 grid-cols-1
-grid-rows-3
+grid-rows-5
 justify-items-center
 items-center
 text-center
 max-w-full
 `;
 const WelcomeText = tw.h1`
-row-start-2
+row-start-3
 font-bold
 text-3xl
 text-accent
 `;
 const ButtonContainer = tw.div`
-row-start-3
+row-start-4
 flex
 flex-col
 gap-5

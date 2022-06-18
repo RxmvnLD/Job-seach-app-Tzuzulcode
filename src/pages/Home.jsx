@@ -33,6 +33,7 @@ const Home = () => {
       //console.log(error);
     }
   };
+
   const getOffers = async () => {
     try {
       let res = await axiosPost("/jobs/employer"),
@@ -110,8 +111,13 @@ const Home = () => {
   };
 
   useEffect(() => {
-    getJobs();
-    getOffers();
+    if (auth.role === "applicant") {
+      getJobs();
+    }
+    if (auth.role === "employer") {
+    } else {
+      getOffers();
+    }
   }, []);
 
   return (
