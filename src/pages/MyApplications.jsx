@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import tw from "twin.macro";
 import JobCard from "../components/JobCard";
 import Sidebar from "../components/user_sidebar/Sidebar";
-import SortBy from "../components/SortBy";
 import { axiosPost } from "../axiosInstance";
 import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
