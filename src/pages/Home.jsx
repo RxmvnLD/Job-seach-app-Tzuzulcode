@@ -118,7 +118,7 @@ const Home = () => {
     } else {
       getOffers();
     }
-  }, []);
+  }, [auth.role]);
 
   return (
     <>
