@@ -1,24 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import tw from "twin.macro";
 import JobCard from "../components/JobCard";
-import Sidebar from "../components/user_sidebar/Sidebar";
-import SortBy from "../components/SortBy";
-import { axiosGet, axiosPost } from "../axiosInstance";
+import { axiosGet } from "../helpers/axiosInstance";
 import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
-import AuthContext from "../Context/AuthContext";
+import Categories from "../components/Categories";
+import Footer from "../components/Footer";
 
 const Home = () => {
-  const { auth } = useContext(AuthContext),
-    [jobs, setJobs] = useState([]),
-    [offers, setOffers] = useState([]);
+  const [loader, setLoader] = useState(true),
+    [jobs, setJobs] = useState([]);
 
   const getJobs = async () => {
     try {
       let res = await axiosGet("/jobs"),
         json = await res.data;
-      //console.log(json);
-      json.forEach((element) => {
+      // eslint-disable-next-line
+      await json.map((element) => {
         let job = {
           title: element.title,
           location: element.location.country,
@@ -29,160 +27,66 @@ const Home = () => {
         };
         setJobs((jobs) => [...jobs, job]);
       });
-    } catch (error) {
-      //console.log(error);
-    }
-  };
-
-  const getOffers = async () => {
-    try {
-      let res = await axiosPost("/jobs/employer"),
-        json = await res.data;
-      //console.log(json);
-      json.forEach((element) => {
-        let offer = {
-          title: element.title,
-          location: element.location.country,
-          company: element.employer.name,
-          salary: element.salary,
-          id: element._id,
-          applicants: element.applicants.length.toString(),
-        };
-        //console.log(element.applicants.length);
-        setOffers((offers) => [...offers, offer]);
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const categoriesSearch = async (categories) => {
-    //console.log("State categories", categories);
-    let catsBody = { category: categories };
-    try {
-      let res = await axiosPost("/jobs/category", catsBody),
-        json = await res.data;
-      //console.log(json);
-      if (jobs.length !== 0) {
-        setJobs([]);
-        json.forEach((element) => {
-          let job = {
-            title: element.title,
-            location: element.location.country,
-            company: element.employer.name,
-            salary: element.salary,
-            id: element._id,
-            applicants: element.applicants.length.toString(),
-          };
-          setJobs((jobs) => [...jobs, job]);
-        });
-      } else {
-        getJobs();
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  const locationSearch = async (location) => {
-    //console.log("State locations", location);
-    try {
-      let res = await axiosPost("/jobs/location", location),
-        json = await res.data;
-      //console.log(json);
-      if (jobs.length !== 0) {
-        setJobs([]);
-        json.forEach((element) => {
-          let job = {
-            title: element.title,
-            location: element.location.country,
-            company: element.employer.name,
-            salary: element.salary,
-            id: element._id,
-            applicants: element.applicants.length.toString(),
-          };
-          setJobs((jobs) => [...jobs, job]);
-        });
-      } else {
-        getJobs();
-      }
-    } catch (error) {
-      console.log(error);
-    }
+      await setLoader(false);
+    } catch (error) {}
   };
 
   useEffect(() => {
-    if (auth.role === "applicant") {
-      getJobs();
-    }
-    if (auth.role === "employer") {
-    } else {
-      getOffers();
-    }
-  }, [auth.role]);
+    getJobs();
+  }, []);
 
   return (
     <>
+      <Etiqueta>Vacantes destacadas</Etiqueta>
       <MainContainer>
-        <Sidebar />
-        {auth.role === "applicant" ? (
-          <>
-            <Etiqueta>Vacantes destacadas</Etiqueta>
-            <SortBy
-              sendCategories={categoriesSearch}
-              sendLocations={locationSearch}
-            />
-          </>
-        ) : (
-          <Etiqueta>Mis Empleos Publicados</Etiqueta>
-        )}
-
-        {auth.role === "applicant" ? (
-          jobs.length === 0 ? (
-            <Loader />
-          ) : (
-            jobs.map((item) => (
-              <Link to={`/details/${item.id}`}>
-                <JobCard
-                  key={item.id}
-                  title={item.title}
-                  location={item.location}
-                  company={item.company}
-                  salary={item.salary}
-                  applicants={item.applicants}
-                />
-              </Link>
-            ))
-          )
-        ) : offers.length === 0 ? (
-          <Loader />
-        ) : (
-          offers.map((item) => (
-            <JobCard
-              key={item.id}
-              title={item.title}
-              location={item.location}
-              company={item.company}
-              salary={item.salary}
-              applicants={item.applicants}
-            />
-          ))
-        )}
+        <Categories />
+        <JobsContariner>
+          {jobs.length === 0
+            ? loader && <Loader />
+            : jobs.map((item) => (
+                <Link to={`/details/${item.id}`}>
+                  <JobCard
+                    key={item.id}
+                    title={item.title}
+                    location={item.location}
+                    company={item.company}
+                    salary={item.salary}
+                    applicants={item.applicants}
+                  />
+                </Link>
+              ))}
+        </JobsContariner>
       </MainContainer>
+      <Footer />
     </>
   );
 };
 const MainContainer = tw.main`
 top-56
-grid
-grid-cols-1
+flex
+flex-row
 gap-2.5
+m-auto
+w-full
 `;
 
 const Etiqueta = tw.h1`
+text-center
+m-5
 text-3xl
 text-primary
 font-bold
-justify-self-center
+`;
+
+const JobsContariner = tw.section`
+flex
+flex-wrap
+border-2
+border-purple-600
+rounded-2xl
+w-3/4
+px-14
+py-4
 `;
 
 export default Home;

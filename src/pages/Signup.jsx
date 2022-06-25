@@ -1,25 +1,24 @@
-import React, { useRef, useContext, useState } from "react";
-import AuthContext from "../Context/AuthContext";
+import React, { useContext, useState } from "react";
+import AuthContext from "../context/AuthContext";
 import tw from "twin.macro";
-import { axiosPost } from "../axiosInstance";
+import { axiosPost } from "../helpers/axiosInstance";
 import { useNavigate } from "react-router-dom";
+import Input from "../components/Input";
+import Button from "../components/Button";
 
 export default function SignUp() {
-  const email = useRef(),
-    password = useRef(),
-    name = useRef(),
-    role = useRef(),
-    navigate = useNavigate(),
+  const navigate = useNavigate(),
     { setAuth } = useContext(AuthContext),
     [option, setOption] = useState("applicant"),
     url = "/auth/signup";
 
   const signup = async (event) => {
     event.preventDefault();
+    const { name, email, password } = event.target;
     const signupData = await {
-      name: name.current.value,
-      email: email.current.value,
-      password: password.current.value,
+      name: name.value,
+      email: email.value,
+      password: password.value,
       role: option,
     };
 
@@ -36,7 +35,7 @@ export default function SignUp() {
         id: json.user.id,
       });
       await alert("Registro exitoso");
-      navigate(-1);
+      navigate("/home");
     } catch (error) {
       error.response.data.message === "Wrong credentials"
         ? alert("Email o contraseña incorrecta")
@@ -49,51 +48,36 @@ export default function SignUp() {
     <Container>
       <FormContainer onSubmit={signup}>
         <CustomH1>SignUp</CustomH1>
-        <input
-          ref={name}
-          placeholder="Nombre..."
-          type="text"
-          className="text-black col-start-2"
-        />
-        <input
-          ref={email}
-          placeholder="Email..."
-          type="email"
-          className="text-black col-start-2"
-        />
-        <input
-          ref={password}
-          placeholder="Password..."
-          type="password"
-          className="text-black col-start-2"
-        />
+        <Input name="name" type="text" inputPlaceholder="Nombre" />
+        <Input name="email" type="email" inputPlaceholder="Correo" />
+        <Input name="password" type="password" inputPlaceholder="Contraseña" />
         <RadioContainer>
           <label>
             <input
-              ref={role}
               type="radio"
               value="applicant"
               name="signup-form"
               defaultChecked
               onChange={(e) => {
                 setOption(e.target.value);
+                console.log(e.target.value);
               }}
             />
             Applicant
           </label>
           <label>
             <input
-              ref={role}
               type="radio"
               name="signup-form"
               value="employer"
               onChange={(e) => {
                 setOption(e.target.value);
+                console.log(e.target.value);
               }}
             />
             Employer
           </label>
-          <SignUpBtn>SignUp</SignUpBtn>
+          <Button text="Registrarse" />
         </RadioContainer>
       </FormContainer>
     </Container>
@@ -101,9 +85,11 @@ export default function SignUp() {
 }
 
 const Container = tw.main`
-grid
-grid-cols-1
-grid-rows-3
+mt-36
+flex
+flex-col
+items-center
+justify-center
 justify-items-center
 text-center
 max-w-full
@@ -122,13 +108,6 @@ justify-items-center
 flex
 flex-col
 gap-5
-`;
-
-const SignUpBtn = tw.button`
-bg-secondary
-text-primary
-h-10
-rounded-lg
 `;
 
 const RadioContainer = tw.div`

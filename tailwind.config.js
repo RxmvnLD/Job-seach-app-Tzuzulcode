@@ -1,5 +1,8 @@
 module.exports = {
-  content: ["./src/**/*.{js,jsx,ts,tsx}"],
+  content: [
+    "node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}",
+    "./src/**/*.{js,jsx,ts,tsx}",
+  ],
   darkMode: "class",
   theme: {
     extend: {
@@ -24,5 +27,5 @@ module.exports = {
       margin: "3rem",
     },
   },
-  plugins: [],
+  plugins: [require("flowbite/plugin")],
 };
