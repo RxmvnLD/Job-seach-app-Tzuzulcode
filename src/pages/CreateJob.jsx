@@ -1,23 +1,21 @@
-import React, { useRef, useContext } from "react";
+import React, { useContext } from "react";
 import tw from "twin.macro";
-import Sidebar from "../components/user_sidebar/Sidebar";
-import { axiosPost } from "../axiosInstance";
+import { axiosPost } from "../helpers/axiosInstance";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../Context/AuthContext";
+import AuthContext from "../context/AuthContext";
+import Input from "../components/Input";
+import Button from "../components/Button";
 
 const CreateJob = () => {
-  const title = useRef(),
-    description = useRef(),
-    categories = useRef(),
-    country = useRef(),
-    province = useRef(),
-    city = useRef(),
-    salary = useRef(),
-    { auth } = useContext(AuthContext),
+  const { auth } = useContext(AuthContext),
     navigate = useNavigate();
+  console.log(auth);
 
   const createNewJob = async (event) => {
     event.preventDefault();
+    const { title, description, categories, country, province, city, salary } =
+      event.target;
+
     const jobData = {
       employer: {
         id: auth.id,
@@ -25,60 +23,71 @@ const CreateJob = () => {
         email: auth.email,
         role: auth.role,
       },
-      description: description.current.value,
-      title: title.current.value,
-      category: categories.current.value.split(", "),
+      description: description.value,
+      title: title.value,
+      category: categories.value.split(", "),
       location: {
-        country: country.current.value,
-        province: province.current.value,
-        city: city.current.value,
+        country: country.value,
+        province: province.value,
+        city: city.value,
       },
-      salary: salary.current.value,
+      salary: salary.value,
     };
+    console.log(jobData);
     try {
-      await axiosPost("/jobs", jobData);
+      const res = await axiosPost("/jobs", jobData);
+      console.log(res.data);
       //await console.log(json);
       await alert("Empleo creado con éxito");
-      navigate(-1);
+      navigate("/home");
     } catch (error) {
       console.log(error);
     }
   };
   return (
     <>
+      <Etiqueta>Nuevo empleo</Etiqueta>
       <MainContainer>
-        <Sidebar />
-        <Etiqueta>Nuevo empleo</Etiqueta>
         <FormContainer onSubmit={createNewJob}>
           <label>Titulo:</label>
-          <JobInput
+          <Input
             type="text"
-            placeholder="Nombre de la vacante"
-            ref={title}
+            name="title"
+            inputPlaceholder="Nombre de la vacante"
             required
           />
           <label>Descripción:</label>
           <textarea
             type="text"
+            name="description"
             placeholder="Descripción del puesto"
-            ref={description}
-            className="text-black"
+            className="p-2 border-2 border-purple-500 rounded text-accent bg-secondary caret-blue-900"
             required
           />
           <label>Categorías:</label>
-          <JobInput
+          <Input
             type="text"
-            placeholder="Separe las categorías por una coma"
-            ref={categories}
+            name="categories"
+            inputPlaceholder="Separe las categorías por una coma"
             required
           />
           <label>Ubicación:</label>
-          <JobInput type="text" placeholder="Pais" ref={country} required />
-          <JobInput type="text" placeholder="Estado" ref={province} required />
-          <JobInput type="text" placeholder="Ciudad" ref={city} required />
+          <Input type="text" name="country" inputPlaceholder="Pais" required />
+          <Input
+            type="text"
+            name="province"
+            inputPlaceholder="Estado"
+            required
+          />
+          <Input type="text" name="city" inputPlaceholder="Ciudad" required />
           <label>Salario mensual:</label>
-          <JobInput type="number" placeholder="Salario" ref={salary} required />
-          <CreateBtn>Crear vacante</CreateBtn>
+          <Input
+            type="number"
+            name="salary"
+            inputPlaceholder="Salario"
+            required
+          />
+          <Button text="Crear vacante" />
         </FormContainer>
       </MainContainer>
     </>
@@ -86,35 +95,28 @@ const CreateJob = () => {
 };
 const MainContainer = tw.main`
 top-56
+md:top-10
 grid
 grid-cols-1
 gap-1
+m-auto
 `;
 
 const Etiqueta = tw.h1`
+text-center
+m-5
 text-3xl
 text-primary
 font-bold
-justify-self-center
 `;
 
 const FormContainer = tw.form`
-m-16
-row-start-4
 justify-items-center
 flex
 flex-col
 gap-3
+m-auto
+w-1/4
 `;
 
-const JobInput = tw.input`
-text-black
-`;
-
-const CreateBtn = tw.button`
-bg-secondary
-text-primary
-h-10
-rounded-lg
-`;
 export default CreateJob;

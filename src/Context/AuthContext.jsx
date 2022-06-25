@@ -1,6 +1,6 @@
 /* eslint-disable no-throw-literal */
 import React, { createContext, useState, useEffect } from "react";
-import { getToken, axiosPost } from "../axiosInstance";
+import { getToken, axiosPost } from "../helpers/axiosInstance";
 const AuthContext = createContext();
 const loggedOut = { logged: false, email: "", name: "", id: "", role: "" },
   url = "/auth/validate";

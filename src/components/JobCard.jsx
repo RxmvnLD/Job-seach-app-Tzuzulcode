@@ -23,13 +23,13 @@ max-w-sm
 bg-secondary
 rounded-lg
 border
-border-gray-200
+border-purple-200
 shadow-md
-hover:bg-gray-100
+hover:bg-purple-100
 dark:bg-gray-800
-dark:border-gray-700
+dark:border-purple-700
 dark:hover:bg-gray-700
-m-2
+m-5
 grid
 grid-cols-4
 cursor-pointer

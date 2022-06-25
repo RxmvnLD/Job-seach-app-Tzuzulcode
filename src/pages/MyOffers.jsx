@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import tw from "twin.macro";
 import JobCard from "../components/JobCard";
 //import SortBy from "../components/SortBy";
@@ -6,40 +6,36 @@ import { axiosPost } from "../helpers/axiosInstance";
 import { Link } from "react-router-dom";
 import Loader from "../components/Loader";
 
-const MyApplications = () => {
-  const [jobs, setJobs] = useState([]),
-    [loader, setLoader] = useState(true);
+const MyOffers = () => {
+  const [loader, setLoader] = useState(true),
+    [jobs, setJobs] = useState([]);
 
   const getJobs = async () => {
     try {
-      let res = await axiosPost("/jobs/me"),
+      let res = await axiosPost("/jobs/employer"),
         json = await res.data;
-      console.log(json);
-      //eslint-disable-next-line
-      json.map((element) => {
+      // eslint-disable-next-line
+      await json.map((element) => {
         let job = {
           title: element.title,
           location: element.location.country,
           company: element.employer.name,
           salary: element.salary,
           id: element._id,
-          applicants: json.length.toString(),
+          applicants: element.applicants.length.toString(),
         };
         setJobs((jobs) => [...jobs, job]);
       });
       await setLoader(false);
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   };
 
   useEffect(() => {
     getJobs();
   }, []);
-
   return (
     <>
-      <Etiqueta>Mis postulaciones</Etiqueta>
+      <Etiqueta>Mis Publicaciones</Etiqueta>
       <MainContainer>
         <JobsContariner>
           {jobs.length === 0
@@ -61,6 +57,7 @@ const MyApplications = () => {
     </>
   );
 };
+
 const MainContainer = tw.main`
 top-56
 flex
@@ -92,4 +89,4 @@ py-4
 m-auto
 `;
 
-export default MyApplications;
+export default MyOffers;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { axiosGet } from "../axiosInstance";
+import { axiosGet } from "../helpers/axiosInstance";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import tw from "twin.macro";
@@ -66,10 +66,12 @@ function SortBy({ sendCategories, sendLocations }) {
       city: citSel.join(),
     };
     sendLocations(location);
+    // eslint-disable-next-line
   }, [countsSel, provSel, citSel]);
 
   useEffect(() => {
     sendCategories(catSel);
+    // eslint-disable-next-line
   }, [catSel]);
 
   useEffect(() => {
@@ -88,7 +90,7 @@ function SortBy({ sendCategories, sendLocations }) {
               setIsOpen(!isOpen);
             }}
           >
-            <p className="text-lg mx-2">Sort By</p>
+            <p className="mx-2 text-lg">Sort By</p>
             <div className="self-center">
               <FontAwesomeIcon className="text-xl" icon={solid("caret-down")} />
             </div>
@@ -127,7 +129,7 @@ function SortBy({ sendCategories, sendLocations }) {
                           Aplicar
                         </ApplyBtn>
                         {categories.map((el) => (
-                          <label className="text-black inline-block">
+                          <label className="inline-block text-black">
                             <input
                               type="checkbox"
                               value={el}
@@ -183,7 +185,7 @@ function SortBy({ sendCategories, sendLocations }) {
                           Aplicar
                         </ApplyBtn>
                         {countries.map((el) => (
-                          <label className="text-black inline-block">
+                          <label className="inline-block text-black">
                             <input
                               type="checkbox"
                               value={el}
@@ -203,7 +205,7 @@ function SortBy({ sendCategories, sendLocations }) {
                     <MenuDivider>
                       <OptionsContainer>
                         {provinces.map((el) => (
-                          <label className="text-black inline-block">
+                          <label className="inline-block text-black">
                             <input
                               type="checkbox"
                               value={el}
@@ -222,7 +224,7 @@ function SortBy({ sendCategories, sendLocations }) {
                     <MenuDivider>
                       <OptionsContainer>
                         {cities.map((el) => (
-                          <label className="text-black inline-block">
+                          <label className="inline-block text-black">
                             <input
                               type="checkbox"
                               value={el}
