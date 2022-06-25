@@ -18,7 +18,7 @@ const Login = () => {
       });
       const json = await res.data;
       await localStorage.setItem("token", json.token);
-      await navigate("/home");
+      await window.location.reload();
     } catch (error) {
       alert("Credenciales incorrectas");
     }
