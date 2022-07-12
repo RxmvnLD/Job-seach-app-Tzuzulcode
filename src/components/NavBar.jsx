@@ -22,17 +22,26 @@ const NavBar = () => {
       <TopNav>
         {auth.logged ? (
           <>
-            <div className="flex mb-2">
-              <Button text="Mi perfil" />
+            <div className="flex flex-row items-center justify-between w-full">
+              <Link to="/myprofile" className="m-auto">
+                <Button text="Mi perfil" />
+              </Link>
+
               <Link
                 to="/home"
-                className="flex flex-row items-center m-auto text-6xl text-primary "
+                className="flex flex-row items-center text-6xl text-primary "
               >
                 {" "}
                 <AiFillCode /> DevJobs
               </Link>
-              <Button text="Cerrar sesión" onClick={logoutHandler} />
+
+              <Button
+                text="Cerrar sesión"
+                onClick={logoutHandler}
+                className="m-auto"
+              />
             </div>
+
             {auth.role === "applicant" ? (
               <div className="flex gap-10 m-auto">
                 <Link to="/myapplications">
@@ -73,5 +82,7 @@ bg-secondary
 flex
 flex-col
 p-5
+gap-5
+items-center
 `;
 export default NavBar;
