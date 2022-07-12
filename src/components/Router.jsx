@@ -9,6 +9,7 @@ import CreateJob from "../pages/CreateJob";
 import Welcome from "../pages/Welcome";
 import NavBar from "./NavBar";
 import MyOffers from "../pages/MyOffers";
+import MyProfile from "../pages/MyProfile";
 
 const Router = () => {
   return (
@@ -21,6 +22,7 @@ const Router = () => {
         <Route path="/myapplications" element={<MyApplications />} />
         <Route path="/myoffers" element={<MyOffers />} />
         <Route path="/createjob" element={<CreateJob />} />
+        <Route path="/myprofile" element={<MyProfile />} />
         <Route path="/details/:id" element={<JobDetails />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
