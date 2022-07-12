@@ -4,7 +4,7 @@ import { useContext } from "react";
 import AuthContext from "./context/AuthContext";
 function App() {
   const { auth } = useContext(AuthContext);
-  console.log(auth);
+  //console.log(auth);
   return (
     <>
       <ThemeProvider>

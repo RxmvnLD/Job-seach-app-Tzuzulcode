@@ -6,6 +6,8 @@ const Footer = () => {
 };
 
 const MainContainer = tw.footer`
+sticky
+bottom-0
 mt-20
 bg-secondary
 h-32`;
