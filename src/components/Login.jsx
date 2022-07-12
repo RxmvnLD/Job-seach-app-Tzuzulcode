@@ -1,13 +1,11 @@
 import { axiosPost } from "../helpers/axiosInstance";
 import tw from "twin.macro";
-import { useNavigate } from "react-router-dom";
 import Button from "./Button";
 import Input from "./Input";
 import { Link } from "react-router-dom";
 import workingLogo from "../imports/img/working-logo.png";
 
 const Login = () => {
-  const navigate = useNavigate();
   const login = async (event) => {
     event.preventDefault();
     const { email, password } = event.target;

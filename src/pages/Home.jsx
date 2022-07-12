@@ -9,7 +9,8 @@ import Footer from "../components/Footer";
 
 const Home = () => {
   const [loader, setLoader] = useState(true),
-    [jobs, setJobs] = useState([]);
+    [jobs, setJobs] = useState([]),
+    [filteredJobs, setFilteredJobs] = useState({});
 
   const getJobs = async () => {
     try {
@@ -30,21 +31,41 @@ const Home = () => {
       await setLoader(false);
     } catch (error) {}
   };
+  const searchHandler = (searchResults) => {
+    setFilteredJobs(searchResults);
+  };
 
   useEffect(() => {
     getJobs();
   }, []);
 
+  useEffect(() => {
+    console.log("Categorías:", filteredJobs.jobsByCategory);
+  }, [filteredJobs]);
+
   return (
     <>
       <Etiqueta>Vacantes destacadas</Etiqueta>
       <MainContainer>
-        <Categories />
+        <Categories searchHandler={searchHandler} />
         <JobsContariner>
-          {jobs.length === 0
+          {Array.isArray(filteredJobs.jobsByCategory)
+            ? filteredJobs.jobsByCategory.map((item) => {
+                <Link className="m-auto" to={`/details/${item.id}`}>
+                  <JobCard
+                    key={item._id}
+                    title={item.title}
+                    location={item.location}
+                    company={item.company}
+                    salary={item.salary}
+                    applicants={item.applicants}
+                  />
+                </Link>;
+              })
+            : jobs.length === 0
             ? loader && <Loader />
             : jobs.map((item) => (
-                <Link to={`/details/${item.id}`}>
+                <Link className="m-auto" to={`/details/${item.id}`}>
                   <JobCard
                     key={item.id}
                     title={item.title}
@@ -57,7 +78,6 @@ const Home = () => {
               ))}
         </JobsContariner>
       </MainContainer>
-      <Footer />
     </>
   );
 };
@@ -87,6 +107,7 @@ rounded-2xl
 w-3/4
 px-14
 py-4
+mb-20
 `;
 
 export default Home;
